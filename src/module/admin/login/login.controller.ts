@@ -34,8 +34,7 @@ export class LoginController {
       // console.log(body);
 
       if (username == '' || password.length < 6) {
-        console.log('illegal username or password');
-        res.redirect('/admin/login');
+        this.toolsService.error(res, 'illegal username or password');
       } else {
         if (code.toLowerCase() == req.session.code.toLowerCase()) {
           password = this.toolsService.getMd5(password);
@@ -43,25 +42,27 @@ export class LoginController {
             'username': username,
             'password': password
           });
-
           // console.log(userResult);
 
           if (userResult.length > 0) {
-            console.log('login success');
             req.session.userinfo = userResult[0];
-            res.redirect('/admin/main');
+            this.toolsService.success(res);
           } else {
-            console.log('wrong username or password');
-            res.redirect('/admin/login');
+            this.toolsService.error(res, 'wrong username or password');
           }
         } else {
-          console.log('captcha is wrong');
-          res.redirect('/admin/login');
+          this.toolsService.error(res, 'captcha is wrong');
         }
       }
     } catch (error) {
       console.log(error);
       res.redirect('/admin/login');
     }
+  }
+
+  @Get('loginOut')
+  loginOut(@Request() req, @Response() res) {
+    req.session.userinfo = null;
+    res.redirect('/admin/login');
   }
 }

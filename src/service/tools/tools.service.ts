@@ -18,4 +18,17 @@ export class ToolsService {
   getMd5(str: string) {
     return md5(str);
   }
+
+  async success(res) {
+    await res.render('admin/public/success', {
+      'redirectUrl': '/admin/main'
+    });
+  }
+
+  async error(res, message) {
+    await res.render('admin/public/error', {
+      'message': message,
+      'redirectUrl': '/admin/login'
+    });
+  }
 }
