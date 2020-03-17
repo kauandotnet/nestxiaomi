@@ -10,7 +10,7 @@ export class AdminauthMiddleware implements NestMiddleware {
     } else {
       if (pathname === '/admin/login' ||
         pathname === '/admin/login/code' ||
-        pathname === '/admim/login/doLogin') {
+        pathname === '/admin/login/doLogin') {
         next()
       } else {
         res.redirect('/admin/login')
