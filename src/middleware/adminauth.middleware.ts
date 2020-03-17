@@ -1,4 +1,5 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
+import { Config } from '../config/config';
 
 @Injectable()
 export class AdminauthMiddleware implements NestMiddleware {
@@ -6,14 +7,15 @@ export class AdminauthMiddleware implements NestMiddleware {
     var pathname = req.baseUrl;
     var userinfo = req.session.userinfo;
     if (userinfo && userinfo.username) {
+      res.locals.userinfo = userinfo;
       next();
     } else {
-      if (pathname === '/admin/login' ||
-        pathname === '/admin/login/code' ||
-        pathname === '/admin/login/doLogin') {
-        next()
+      if (pathname === `/${Config.adminPath}/login` ||
+        pathname === `/${Config.adminPath}/login/code` ||
+        pathname === `/${Config.adminPath}/login/doLogin`) {
+        next();
       } else {
-        res.redirect('/admin/login')
+        res.redirect(`/${Config.adminPath}/login`);
       }
     }
   }

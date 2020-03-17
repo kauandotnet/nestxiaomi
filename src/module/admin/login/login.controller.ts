@@ -1,8 +1,9 @@
 import { Controller, Get, Render, Request, Response, Post, Body } from '@nestjs/common';
 import { ToolsService } from '../../../service/tools/tools.service';
 import { AdminService } from '../../../service/admin/admin.service';
+import { Config } from '../../../config/config';
 
-@Controller('admin/login')
+@Controller(`${Config.adminPath}/login`)
 export class LoginController {
   constructor(
     private toolsService: ToolsService,
@@ -36,7 +37,7 @@ export class LoginController {
       if (username == '' || password.length < 6) {
         this.toolsService.error(res, 'illegal username or password');
       } else {
-        if (code.toLowerCase() == req.session.code.toLowerCase()) {
+        if (req.session.code && code.toLowerCase() == req.session.code.toLowerCase()) {
           password = this.toolsService.getMd5(password);
           var userResult = await this.adminService.find({
             'username': username,
@@ -56,13 +57,13 @@ export class LoginController {
       }
     } catch (error) {
       console.log(error);
-      res.redirect('/admin/login');
+      res.redirect(`/${Config.adminPath}/login`);
     }
   }
 
-  @Get('loginOut')
-  loginOut(@Request() req, @Response() res) {
+  @Get('logout')
+  logout(@Request() req, @Response() res) {
     req.session.userinfo = null;
-    res.redirect('/admin/login');
+    res.redirect(`/${Config.adminPath}/login`);
   }
 }
