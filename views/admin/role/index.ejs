@@ -1,0 +1,36 @@
+<%- include('../public/page_header'); %>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr class="th">
+            <th>title</th>
+            <th>description</th>
+            <th>add time</th>
+            <th class="text-center">operation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let i = 0; i < roleList.length; i++) { %>
+          <tr>
+            <td><%= roleList[i].title %></td>
+            <td><%= roleList[i].description %></td>
+            <td><%= roleList[i].add_time %></td>
+            <td class="text-center">
+              <a href="/<%= config.adminPath %>/role/edit?id=<%= roleList[i]._id %>">edit</a>
+              <a class="delete" href="/<%= config.adminPath %>/role/delete?id=<%= roleList[i]._id %>">delete</a>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+</body>
+
+</html>

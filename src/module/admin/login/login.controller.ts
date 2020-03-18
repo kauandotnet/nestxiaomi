@@ -35,7 +35,7 @@ export class LoginController {
       // console.log(body);
 
       if (username == '' || password.length < 6) {
-        this.toolsService.error(res, 'illegal username or password');
+        this.toolsService.error(res, 'illegal username or password', `/${Config.adminPath}/login`);
       } else {
         if (req.session.code && code.toLowerCase() == req.session.code.toLowerCase()) {
           password = this.toolsService.getMd5(password);
@@ -47,12 +47,12 @@ export class LoginController {
 
           if (userResult.length > 0) {
             req.session.userinfo = userResult[0];
-            this.toolsService.success(res);
+            this.toolsService.success(res, `/${Config.adminPath}/main`);
           } else {
-            this.toolsService.error(res, 'wrong username or password');
+            this.toolsService.error(res, 'wrong username or password', `/${Config.adminPath}/login`);
           }
         } else {
-          this.toolsService.error(res, 'captcha is wrong');
+          this.toolsService.error(res, 'captcha is wrong', `/${Config.adminPath}/login`);
         }
       }
     } catch (error) {
