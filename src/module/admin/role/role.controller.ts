@@ -7,7 +7,7 @@ import { ToolsService } from 'src/service/tools/tools.service';
 export class RoleController {
   constructor(
     private roleService: RoleService,
-    private toolService: ToolsService
+    private toolsService: ToolsService
   ) { }
 
   @Get()
@@ -29,12 +29,12 @@ export class RoleController {
     if (body.title != '') {
       let result = await this.roleService.add(body);
       if (result) {
-        this.toolService.success(res, '/role');
+        this.toolsService.success(res, '/role');
       } else {
-        this.toolService.error(res, 'add failed', '/role');
+        this.toolsService.error(res, 'add failed', '/role/add');
       }
     } else {
-      this.toolService.error(res, 'title cannot be empty', '/role');
+      this.toolsService.error(res, 'title cannot be empty', '/role/add');
     }
   }
 
@@ -49,21 +49,22 @@ export class RoleController {
 
   @Post('doEdit')
   async doEdit(@Body() body, @Response() res) {
+    let id = body._id;
     if (body.title != '') {
-      let result = await this.roleService.update({ '_id': body._id }, body);
+      let result = await this.roleService.update({ '_id': id }, body);
       if (result) {
-        this.toolService.success(res, '/role');
+        this.toolsService.success(res, '/role');
       } else {
-        this.toolService.error(res, 'edit failed', '/role/add');
+        this.toolsService.error(res, 'edit failed', `/role/edit?id=${id}`);
       }
     } else {
-      this.toolService.error(res, 'title cannot be empty', '/role/add');
+      this.toolsService.error(res, 'title cannot be empty', `/role/edit?id=${id}`);
     }
   }
 
   @Get('delete')
-  async delete(@Query() query, @Response() res) {
-    let result = await this.roleService.delete({ '_id': query.id });
-    this.toolService.success(res, '/role');
+  delete(@Query() query, @Response() res) {
+    this.roleService.delete({ '_id': query.id });
+    this.toolsService.success(res, '/role');
   }
 }

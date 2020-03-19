@@ -22,7 +22,7 @@
             <td><%= adminResult[i].role[0].title %></td>
             <td class="text-center">
               <a href="/<%= config.adminPath %>/manager/edit?id=<%= adminResult[i]._id %>">edit</a>
-              <a href="/<%= config.adminPath %>/manager/delete?id=<%= adminResult[i]._id %>">delete</a>
+              <a class="delete" href="/<%= config.adminPath %>/manager/delete?id=<%= adminResult[i]._id %>">delete</a>
             </td>
           </tr>
           <% } %>

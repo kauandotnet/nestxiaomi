@@ -57,13 +57,13 @@ export class LoginController {
       }
     } catch (error) {
       console.log(error);
-      res.redirect('/login');
+      res.redirect(`${Config.adminPath}/login`);
     }
   }
 
   @Get('logout')
   logout(@Request() req, @Response() res) {
     req.session.userinfo = null;
-    res.redirect('/login');
+    res.redirect(`${Config.adminPath}/login`);
   }
 }
