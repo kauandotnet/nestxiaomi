@@ -13,9 +13,10 @@ import { Config } from './config/config';
     DefaultModule,
     ApiModule,
     MongooseModule.forRoot(
-      'mongodb://localhost/nestxiaomi',
-      { useNewUrlParser: true }
-    )
+      'mongodb://localhost/nestxiaomi', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    })
   ],
   controllers: [],
   providers: [],

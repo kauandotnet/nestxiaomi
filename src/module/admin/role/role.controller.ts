@@ -29,12 +29,12 @@ export class RoleController {
     if (body.title != '') {
       let result = await this.roleService.add(body);
       if (result) {
-        this.toolService.success(res, `/${Config.adminPath}/role`);
+        this.toolService.success(res, '/role');
       } else {
-        this.toolService.error(res, 'add failed', `/${Config.adminPath}/role`);
+        this.toolService.error(res, 'add failed', '/role');
       }
     } else {
-      this.toolService.error(res, 'title cannot be empty', `/${Config.adminPath}/role`);
+      this.toolService.error(res, 'title cannot be empty', '/role');
     }
   }
 
@@ -52,18 +52,18 @@ export class RoleController {
     if (body.title != '') {
       let result = await this.roleService.update({ '_id': body._id }, body);
       if (result) {
-        this.toolService.success(res, `/${Config.adminPath}/role`);
+        this.toolService.success(res, '/role');
       } else {
-        this.toolService.error(res, 'edit failed', `/${Config.adminPath}/role`);
+        this.toolService.error(res, 'edit failed', '/role/add');
       }
     } else {
-      this.toolService.error(res, 'title cannot be empty', `/${Config.adminPath}/role`);
+      this.toolService.error(res, 'title cannot be empty', '/role/add');
     }
   }
 
   @Get('delete')
   async delete(@Query() query, @Response() res) {
     let result = await this.roleService.delete({ '_id': query.id });
-    this.toolService.success(res, `/${Config.adminPath}/role`);
+    this.toolService.success(res, '/role');
   }
 }

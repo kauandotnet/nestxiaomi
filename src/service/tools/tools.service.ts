@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as svgCaptcha from 'svg-captcha';
 import * as md5 from 'md5';
+import { Config } from '../../config/config';
 
 @Injectable()
 export class ToolsService {
@@ -19,16 +20,16 @@ export class ToolsService {
     return md5(str);
   }
 
-  async success(res, redirectUrl) {
+  async success(res, redirectPath) {
     await res.render('admin/public/success', {
-      'redirectUrl': redirectUrl
+      'redirectUrl': `/${Config.adminPath}` + redirectPath
     });
   }
 
-  async error(res, message, redirectUrl) {
+  async error(res, message, redirectPath) {
     await res.render('admin/public/error', {
       'message': message,
-      'redirectUrl': redirectUrl
+      'redirectUrl': `/${Config.adminPath}` + redirectPath
     });
   }
 }

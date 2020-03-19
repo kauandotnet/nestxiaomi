@@ -17,7 +17,7 @@
           <tr>
             <td><%= roleList[i].title %></td>
             <td><%= roleList[i].description %></td>
-            <td><%= roleList[i].add_time %></td>
+            <td><%= helper.formatTime(roleList[i].add_time) %></td>
             <td class="text-center">
               <a href="/<%= config.adminPath %>/role/edit?id=<%= roleList[i]._id %>">edit</a>
               <a class="delete" href="/<%= config.adminPath %>/role/delete?id=<%= roleList[i]._id %>">delete</a>

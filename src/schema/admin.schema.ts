@@ -21,7 +21,7 @@ export const AdminSchema = new Schema({
     default: 1
   },
   role_id: {
-    type: mongoose.Types.ObjectId
+    type: Schema.Types.ObjectId
   },
   add_time: {
     type: Number,
