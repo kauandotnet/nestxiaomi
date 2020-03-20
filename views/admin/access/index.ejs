@@ -54,7 +54,7 @@
             <td><%= list[i].items[j].description %></td>
             <td class="text-center">
               <a href="/<%= config.adminPath %>/access/edit?id=<%= list[i].items[j]._id %>">edit</a>
-              <a href="/<%= config.adminPath %>/access/delete?id=<%= list[i].items[j]._id %>&model=Access">delete</a>
+              <a class="delete" href="/<%= config.adminPath %>/access/delete?id=<%= list[i].items[j]._id %>">delete</a>
             </td>
           </tr>
           <% } %>

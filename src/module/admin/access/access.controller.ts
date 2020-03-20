@@ -1,4 +1,4 @@
-import { Controller, Get, Render, Post, Body, Response } from '@nestjs/common';
+import { Controller, Get, Render, Post, Body, Response, Query } from '@nestjs/common';
 import { Config } from '../../../config/config';
 import { AccessService } from '../../../service/access/access.service';
 import * as mongoose from 'mongoose';
@@ -48,5 +48,42 @@ export class AccessController {
     }
     this.accessService.add(body);
     this.toolsService.success(res, '/access');
+  }
+
+  @Get('edit')
+  @Render('admin/access/edit')
+  async edit(@Query() query) {
+    let moduleList = await this.accessService.find({ 'module_id': '0' });
+    let accessResult = await this.accessService.find({ '_id': query.id });
+    return {
+      moduleList,
+      list: accessResult[0]
+    };
+  }
+
+  @Post('doEdit')
+  doEdit(@Body() body, @Response() res) {
+    let module_id = body.module_id;
+    let _id = body._id;
+    try {
+      if (module_id != '0') {
+        body.module_id = mongoose.Types.ObjectId(module_id);
+      }
+      this.accessService.update({ '_id': _id }, body);
+      this.toolsService.success(res, '/access');
+    } catch (error) {
+      console.log(error);
+      this.toolsService.error(res, 'illegal request', `/access/edit?id=${_id}`);
+    }
+  }
+
+  @Get('delete')
+  delete(@Query() query, @Response() res) {
+    try {
+      this.accessService.delete({ '_id': query.id });
+      this.toolsService.success(res, '/access');
+    } catch (error) {
+      this.toolsService.error(res, 'illegal request', `/access/delete?id=${query.id}`);
+    }
   }
 }

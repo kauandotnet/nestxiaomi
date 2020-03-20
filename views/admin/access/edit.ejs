@@ -4,17 +4,39 @@
   <div class="row">
     <div class="panel panel-default">
       <div class="panel-heading">
-        edit role
+        edit access
       </div>
       <div class="panel-body">
         <div class="table-responsive input-form">
-          <form action="/<%= config.adminPath %>/role/doEdit" method="POST">
-            <input type="hidden" name="_id" value="<%= roleList._id %>">
+          <form action="/<%= config.adminPath %>/access/doEdit" method="POST">
+            <input type="hidden" name="_id" value="<%= list._id %>">
             <ul>
-              <li> 角色名称: <input type="text" name="title" value="<%= roleList.title %>" /></li>
+              <li> 模块名称: <input type="text" name="module_name" value="<%= list.module_name %>"></li>
               <li>
-                角色描述:
-                <textarea name="description" id="" cols="60" rows="8"><%= roleList.description %></textarea>
+                节点类型:
+                <select name="type" id="type">
+                  <option value="1" <% if (list.type == 1) { %>selected<% } %>>module</option>
+                  <option value="2" <% if (list.type == 2) { %>selected<% } %>>menu</option>
+                  <option value="3" <% if (list.type == 3) { %>selected<% } %>>action</option>
+                </select>
+              </li>
+              <li> 操作名称: <input type="text" name="action_name" value="<%= list.action_name %>"></li>
+              <li> 操作地址: <input type="text" name="url" value="<%= list.url %>"></li>
+              <li> 所属模块:
+                <select name="module_id" id="module_id">
+                  <option value="0">module</option>
+                  <% for (let i = 0; i < moduleList.length; i++) { %>
+                  <% if (moduleList[i]._id.toString() == list.module_id.toString()) { %>
+                  <option selected value="<%= moduleList[i]._id %>"><%= moduleList[i].module_name %></option>
+                  <% } else { %>
+                  <option value="<%= moduleList[i]._id %>"><%= moduleList[i].module_name %></option>
+                  <% } %>
+                  <% } %>
+                </select>
+              </li>
+              <li> 排　　序: <input type="text" name="sort" value="100" value="<%= list.sort %>"></li>
+              <li> 描　　述 :
+                <textarea name="description" id="description" cols="60" rows="5"><%= list.description %></textarea>
               </li>
               <li>
                 <br />
@@ -27,7 +49,6 @@
     </div>
   </div>
 </div>
-
 </body>
 
 </html>
