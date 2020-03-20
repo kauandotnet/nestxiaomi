@@ -17,8 +17,8 @@ export class AdminService {
 
   async add(json: AdminInterface) {
     try {
-      let role = new this.adminModel(json);
-      return await role.save();
+      let admin = new this.adminModel(json);
+      return await admin.save();
     } catch (error) {
       console.log(error);
       return null;

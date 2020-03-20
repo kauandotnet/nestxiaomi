@@ -1,0 +1,52 @@
+<%- include('../public/page_header'); %>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        add access
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive input-form">
+          <form action="/<%= config.adminPath %>/access/doAdd" method="POST">
+            <ul>
+              <li> 模块名称: <input type="text" name="module_name"></li>
+              <li>
+                节点类型:
+                <!-- 1、module  2、menu     3、operation -->
+                <select name="type" id="type">
+                  <option value="1">module</option>
+                  <option value="2">menu</option>
+                  <option value="3">action</option>
+                </select>
+              </li>
+              <li> 操作名称: <input type="text" name="action_name"></li>
+              <li> 操作地址: <input type="text" name="url"></li>
+              <li> 所属模块:
+                <select name="module_id" id="module_id">
+                  <option value="0">module</option>
+                  <% for (let i = 0; i < moduleList.length; i++) { %>
+                  <option value="<%= moduleList[i]._id %>">
+                    <%= moduleList[i].module_name %>
+                  </option>
+                  <% } %>
+                </select>
+              </li>
+              <li> 排　　序: <input type="text" name="sort" value="100"></li>
+              <li> 描　　述 :
+                <textarea name="description" id="description" cols="60" rows="5"></textarea>
+              </li>
+              <li>
+                <br />
+                <button type="submit" class="btn btn-default">Submit</button>
+              </li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>
