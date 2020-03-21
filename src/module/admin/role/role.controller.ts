@@ -1,13 +1,17 @@
 import { Controller, Get, Render, Post, Body, Response, Query } from '@nestjs/common';
 import { RoleService } from '../../../service/role/role.service';
 import { Config } from '../../../config/config';
-import { ToolsService } from 'src/service/tools/tools.service';
+import { ToolsService } from '../../../service/tools/tools.service';
+import { AccessService } from '../../../service/access/access.service';
+import { RoleAccessService } from '../../../service/role-access/role-access.service';
 
 @Controller(`${Config.adminPath}/role`)
 export class RoleController {
   constructor(
     private roleService: RoleService,
-    private toolsService: ToolsService
+    private toolsService: ToolsService,
+    private accessService: AccessService,
+    private roleAccessService: RoleAccessService
   ) { }
 
   @Get()
@@ -66,5 +70,43 @@ export class RoleController {
   delete(@Query() query, @Response() res) {
     this.roleService.delete({ '_id': query.id });
     this.toolsService.success(res, '/role');
+  }
+
+  @Get('auth')
+  @Render('admin/role/auth')
+  async auth(@Query() query) {
+    let role_id = query.id;
+    let result = await this.accessService.getModel().aggregate([{
+      $match: {
+        'module_id': '0'
+      }
+    }, {
+      $lookup: {
+        from: 'access',
+        localField: '_id',
+        foreignField: 'module_id',
+        as: 'items'
+      }
+    }]);
+    return {
+      list: result,
+      role_id
+    };
+  }
+
+  @Post('doAuth')
+  async doAuth(@Body() body, @Response() res) {
+    let role_id = body.role_id;
+    let access_node = body.access_node;
+
+    this.roleAccessService.deleteMany({ 'role_id': role_id });
+
+    for (let i = 0; i < access_node.length; i++) {
+      this.roleAccessService.add({
+        'role_id': role_id,
+        'access_id': access_node[i]
+      });
+    }
+    this.toolsService.success(res, `/role/auth?id=${role_id}`);
   }
 }
