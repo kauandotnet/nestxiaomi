@@ -28,6 +28,7 @@ export const AdminSchema = new Schema({
     default: date.getTime()
   },
   is_super: {
-    type: Number
+    type: Number,
+    default: 0
   }
 });

@@ -19,7 +19,7 @@ import { Config } from './config/config';
     })
   ],
   controllers: [],
-  providers: [],
+  providers: []
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

@@ -89,9 +89,9 @@ export class RoleController {
       }
     }]);
 
-    let accessResult = await this.roleAccessService.find({ 'role_id': role_id });
+    let roleAccessResult = await this.roleAccessService.find({ 'role_id': role_id });
     let roleAccessArray = [];
-    accessResult.forEach(value => {
+    roleAccessResult.forEach(value => {
       roleAccessArray.push(value.access_id.toString());
     });
 

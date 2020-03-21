@@ -1,10 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { AdminInterface } from '../../interface/admin.interface';
+import { RoleAccessService } from '../role-access/role-access.service';
+import { Config } from '../../config/config';
+import { AccessService } from '../access/access.service';
 
 @Injectable()
 export class AdminService {
-  constructor(@InjectModel('Admin') private readonly adminModel) { }
+  constructor(
+    @InjectModel('Admin') private readonly adminModel,
+    private roleAccessService: RoleAccessService,
+    private accessService: AccessService
+  ) { }
 
   async find(json: AdminInterface = {}, fields?: string) {
     try {
@@ -45,5 +52,32 @@ export class AdminService {
 
   getModel() {
     return this.adminModel;
+  }
+
+  async checkAuth(req) {
+    let pathname: string = req.baseUrl;
+    pathname = pathname.replace(`/${Config.adminPath}/`, '');
+
+    let userinfo = req.session.userinfo;
+    let role_id = userinfo.role_id;
+
+    if (userinfo.is_super == 1 ||
+      pathname == 'login/logout' ||
+      pathname == 'main/welcome') {
+      return true;
+    }
+
+    let roleAccessResult = await this.roleAccessService.find({ 'role_id': role_id });
+    let roleAccessArray = [];
+    roleAccessResult.forEach(value => {
+      roleAccessArray.push(value.access_id.toString());
+    });
+
+    let accessResult = await this.accessService.find({ 'url': pathname });
+    if (accessResult.length > 0) {
+      return roleAccessArray.indexOf(accessResult[0]._id.toString()) != -1;
+    } else {
+      return false;
+    }
   }
 }
