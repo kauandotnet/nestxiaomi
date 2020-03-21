@@ -63,7 +63,10 @@ export class AdminService {
 
     if (userinfo.is_super == 1 ||
       pathname == 'login/logout' ||
-      pathname == 'main/welcome') {
+      pathname == 'main/welcome' ||
+      pathname == 'main' ||
+      pathname == 'login' ||
+      pathname == 'login/doLogin') {
       return true;
     }
 
