@@ -88,6 +88,24 @@ export class RoleController {
         as: 'items'
       }
     }]);
+
+    let accessResult = await this.roleAccessService.find({ 'role_id': role_id });
+    let roleAccessArray = [];
+    accessResult.forEach(value => {
+      roleAccessArray.push(value.access_id.toString());
+    });
+
+    for (let i = 0; i < result.length; i++) {
+      if (roleAccessArray.indexOf(result[i]._id.toString()) != -1) {
+        result[i].checked = true;
+      }
+      for (let j = 0; j < result[i].items.length; j++) {
+        if (roleAccessArray.indexOf(result[i].items[j]._id.toString()) != -1) {
+          result[i].items[j].checked = true;
+        }
+      }
+    }
+
     return {
       list: result,
       role_id
@@ -100,12 +118,13 @@ export class RoleController {
     let access_node = body.access_node;
 
     this.roleAccessService.deleteMany({ 'role_id': role_id });
-
-    for (let i = 0; i < access_node.length; i++) {
-      this.roleAccessService.add({
-        'role_id': role_id,
-        'access_id': access_node[i]
-      });
+    if (access_node) {
+      for (let i = 0; i < access_node.length; i++) {
+        this.roleAccessService.add({
+          'role_id': role_id,
+          'access_id': access_node[i]
+        });
+      }
     }
     this.toolsService.success(res, `/role/auth?id=${role_id}`);
   }
