@@ -2,6 +2,10 @@ import { Injectable } from '@nestjs/common';
 import * as svgCaptcha from 'svg-captcha';
 import * as md5 from 'md5';
 import { Config } from '../../config/config';
+import { format } from 'silly-datetime';
+import { join, extname } from 'path';
+import * as mkdirp from 'mkdirp';
+import { createWriteStream } from 'fs';
 
 @Injectable()
 export class ToolsService {
@@ -31,5 +35,25 @@ export class ToolsService {
       'message': message,
       'redirectUrl': `/${Config.adminPath}` + redirectPath
     });
+  }
+
+  getTime() {
+    let date = new Date();
+    return date.getTime();
+  }
+
+  uploadFile(file) {
+    let day = format(new Date(), 'YYYYMMDD');
+    let timestamp = this.getTime();
+
+    let dir = join(__dirname, `../../../public/${Config.uploadDir}`, day);
+    mkdirp.sync(dir);
+
+    let uploadDir = join(dir, timestamp + extname(file.originalname));
+
+    const writeImage = createWriteStream(uploadDir);
+    writeImage.write(file.buffer);
+
+    return join(Config.uploadDir, day, timestamp + extname(file.originalname));
   }
 }

@@ -28,6 +28,7 @@
     "ejs": "^3.0.1",
     "express-session": "^1.17.0",
     "md5": "^2.2.1",
+    "mkdirp": "^1.0.3",
     "mongoose": "^5.9.5",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
