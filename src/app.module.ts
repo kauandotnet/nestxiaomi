@@ -6,7 +6,6 @@ import { AdminauthMiddleware } from './middleware/adminauth.middleware';
 import { InitMiddleware } from './middleware/init.middleware';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Config } from './config/config';
-
 @Module({
   imports: [
     AdminModule,

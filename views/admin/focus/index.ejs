@@ -1,0 +1,38 @@
+<%- include('../public/page_header'); %>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr class="th">
+            <th>title</th>
+            <th>type</th>
+            <th>img</th>
+            <th>link</th>
+            <th class="text-center">status</th>
+            <th class="text-center">operation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let i = 0; i < focusList.length; i++) { %>
+          <tr>
+            <td><%= focusList[i].title %></td>
+            <td><%= focusList[i].type %></td>
+            <td><img src="/<%= focusList[i].focus_img %>" width="80"></td>
+            <td><%= focusList[i].link %></td>
+            <td><%= focusList[i].status %></td>
+            <td class="text-center">
+              <a href="/<%= config.adminPath %>/focus/edit?id=<%= focusList[i]._id %>">edit</a>
+              <a class="delete" href="/<%= config.adminPath %>/focus/delete?id=<%= focusList[i]._id %>">delete</a>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

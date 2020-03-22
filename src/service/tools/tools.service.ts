@@ -43,17 +43,21 @@ export class ToolsService {
   }
 
   uploadFile(file) {
-    let day = format(new Date(), 'YYYYMMDD');
-    let timestamp = this.getTime();
+    if (file) {
+      let day = format(new Date(), 'YYYYMMDD');
+      let timestamp = this.getTime();
 
-    let dir = join(__dirname, `../../../public/${Config.uploadDir}`, day);
-    mkdirp.sync(dir);
+      let dir = join(__dirname, `../../../public/${Config.uploadDir}`, day);
+      mkdirp.sync(dir);
 
-    let uploadDir = join(dir, timestamp + extname(file.originalname));
+      let uploadDir = join(dir, timestamp + extname(file.originalname));
 
-    const writeImage = createWriteStream(uploadDir);
-    writeImage.write(file.buffer);
+      const writeImage = createWriteStream(uploadDir);
+      writeImage.write(file.buffer);
 
-    return join(Config.uploadDir, day, timestamp + extname(file.originalname));
+      return join(Config.uploadDir, day, timestamp + extname(file.originalname));
+    } else {
+      return '';
+    }
   }
 }
