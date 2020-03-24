@@ -21,7 +21,15 @@
             <td><%= focusList[i].type %></td>
             <td><img src="/<%= focusList[i].focus_img %>" width="80"></td>
             <td><%= focusList[i].link %></td>
-            <td><%= focusList[i].status %></td>
+            <td align="center">
+              <% if (focusList[i].status == 1) { %>
+              <img src="/admin/images/yes.gif"
+                onclick="app.changeStatus(this, 'focus', 'status', '<%= focusList[i]._id %>')">
+              <% } else { %>
+              <img src="/admin/images/no.gif"
+                onclick="app.changeStatus(this, 'focus', 'status', '<%= focusList[i]._id %>')">
+              <% } %>
+            </td>
             <td class="text-center">
               <a href="/<%= config.adminPath %>/focus/edit?id=<%= focusList[i]._id %>">edit</a>
               <a class="delete" href="/<%= config.adminPath %>/focus/delete?id=<%= focusList[i]._id %>">delete</a>

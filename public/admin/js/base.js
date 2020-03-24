@@ -21,6 +21,17 @@ let app = {
     $('.delete').click(function () {
       return confirm('Are you sure?');
     });
+  },
+  changeStatus(el, model, fields, id) {
+    $.get('/admin/main/changeStatus', { id, model, fields }, function (data) {
+      if (data.success) {
+        if (el.src.indexOf('yes') != -1) {
+          el.src = '/admin/images/no.gif';
+        } else {
+          el.src = '/admin/images/yes.gif';
+        }
+      }
+    });
   }
 }
 

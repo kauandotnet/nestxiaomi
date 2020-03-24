@@ -1,13 +1,16 @@
-import { Controller, Get, Render, Request } from '@nestjs/common';
+import { Controller, Get, Render, Request, Query } from '@nestjs/common';
 import { Config } from '../../../config/config';
 import { AccessService } from '../../../service/access/access.service';
 import { RoleAccessService } from '../../../service/role-access/role-access.service';
+import { FocusService } from '../../../service/focus/focus.service';
+
 
 @Controller(`${Config.adminPath}/main`)
 export class MainController {
   constructor(
     private accessService: AccessService,
-    private roleAccessService: RoleAccessService
+    private roleAccessService: RoleAccessService,
+    private focusService: FocusService
   ) { }
 
   @Get()
@@ -55,5 +58,31 @@ export class MainController {
   @Render('admin/main/welcome')
   welcome() {
     return {};
+  }
+
+  @Get('changeStatus')
+  async changeStatus(@Query() query) {
+    let id = query.id;
+    let model = query.model + 'Service';
+    let fields = query.fields;
+
+    let json = {};
+    let focusResult = await this[model].find({ '_id': id });
+
+    if (focusResult.length > 0) {
+      let tempFields = focusResult[0][fields];
+      tempFields == 1 ? json = { [fields]: 0 } : json = { [fields]: 1 };
+
+      this[model].update({ '_id': id }, json);
+      return {
+        success: true,
+        message: 'success'
+      }
+    } else {
+      return {
+        success: false,
+        message: 'fail'
+      }
+    }
   }
 }
