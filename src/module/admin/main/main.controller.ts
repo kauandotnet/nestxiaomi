@@ -67,12 +67,37 @@ export class MainController {
     let fields = query.fields;
 
     let json = {};
-    let focusResult = await this[model].find({ '_id': id });
+    let modelResult = await this[model].find({ '_id': id });
 
-    if (focusResult.length > 0) {
-      let tempFields = focusResult[0][fields];
+    if (modelResult.length > 0) {
+      let tempFields = modelResult[0][fields];
       tempFields == 1 ? json = { [fields]: 0 } : json = { [fields]: 1 };
 
+      this[model].update({ '_id': id }, json);
+      return {
+        success: true,
+        message: 'success'
+      }
+    } else {
+      return {
+        success: false,
+        message: 'fail'
+      }
+    }
+  }
+
+  @Get('editNum')
+  async editNum(@Query() query) {
+    let id = query.id;
+    let model = query.model + 'Service';
+    let fields = query.fields;
+    let num = query.num;
+
+    let modelResult = await this[model].find({ '_id': id });
+    if (modelResult.length > 0) {
+      let json = {
+        [fields]: num
+      };
       this[model].update({ '_id': id }, json);
       return {
         success: true,

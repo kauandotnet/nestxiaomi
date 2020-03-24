@@ -10,6 +10,7 @@
             <th>type</th>
             <th>img</th>
             <th>link</th>
+            <th class="text-center">sort</th>
             <th class="text-center">status</th>
             <th class="text-center">operation</th>
           </tr>
@@ -21,6 +22,11 @@
             <td><%= focusList[i].type %></td>
             <td><img src="/<%= focusList[i].focus_img %>" width="80"></td>
             <td><%= focusList[i].link %></td>
+            <td class="text-center">
+              <span onclick="app.editNum(this,'focus','sort','<%= focusList[i]._id %>')">
+                <%= focusList[i].sort %>
+              </span>
+            </td>
             <td align="center">
               <% if (focusList[i].status == 1) { %>
               <img src="/admin/images/yes.gif"

@@ -32,6 +32,27 @@ let app = {
         }
       }
     });
+  },
+  editNum(el, model, fields, id) {
+    // 获取el里面的值
+    let val = $(el).html();
+    // 创建一个input的dom节点
+    let input = $('<input value="">');
+    // 点击input的时候阻止冒泡 为了点击时不执行任何操作
+    $(input).click(function () {
+      return false;
+    });
+    // 把input放在el里面
+    $(el).html(input);
+    // 让input获取焦点 给input赋值
+    $(input).trigger('focus').val(val);
+    // 鼠标离开的时候给span赋值 并触发ajax请求
+    $(input).blur(function () {
+      var num = $(this).val();
+      $(el).html(num);
+      // 触发ajax请求
+      $.get('/admin/main/editNum', { id, model, fields, num });
+    });
   }
 }
 
