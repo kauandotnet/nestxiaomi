@@ -23,16 +23,21 @@ import { FocusController } from './focus/focus.controller';
 import { FocusSchema } from '../../schema/focus.schema';
 import { FocusService } from '../../service/focus/focus.service';
 
+import { GoodsTypeSchema } from '../../schema/goods_type.schema';
+import { GoodsTypeController } from './goods-type/goods-type.controller';
+import { GoodsTypeService } from '../../service/goods-type/goods-type.service';
+
 @Module({
   imports: [MongooseModule.forFeature([
     { name: 'Admin', schema: AdminSchema, collection: 'admin' },
     { name: 'Role', schema: RoleSchema, collection: 'role' },
     { name: 'Access', schema: AccessSchema, collection: 'access' },
     { name: 'RoleAccess', schema: RoleAccessSchema, collection: 'role_access' },
-    { name: 'Focus', schema: FocusSchema, collection: 'focus' }
+    { name: 'Focus', schema: FocusSchema, collection: 'focus' },
+    { name: 'GoodsType', schema: GoodsTypeSchema, collection: 'goods_type' }
   ])],
-  controllers: [MainController, LoginController, ManagerController, RoleController, AccessController, FocusController],
-  providers: [ToolsService, AdminService, RoleService, AccessService, RoleAccessService, FocusService],
+  controllers: [MainController, LoginController, ManagerController, RoleController, AccessController, FocusController, GoodsTypeController],
+  providers: [ToolsService, AdminService, RoleService, AccessService, RoleAccessService, FocusService, GoodsTypeService],
   exports: [AdminService, RoleService, AccessService, RoleAccessService]
 })
 export class AdminModule { }
