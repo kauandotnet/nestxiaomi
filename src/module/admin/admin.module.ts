@@ -27,6 +27,10 @@ import { GoodsTypeSchema } from '../../schema/goods_type.schema';
 import { GoodsTypeController } from './goods-type/goods-type.controller';
 import { GoodsTypeService } from '../../service/goods-type/goods-type.service';
 
+import { GoodsTypeAttributeSchema } from '../../schema/goods_type_attribute.schema';
+import { GoodsTypeAttributeService } from '../../service/goods-type-attribute/goods-type-attribute.service';
+import { GoodsTypeAttributeController } from './goods-type-attribute/goods-type-attribute.controller';
+
 @Module({
   imports: [MongooseModule.forFeature([
     { name: 'Admin', schema: AdminSchema, collection: 'admin' },
@@ -34,10 +38,11 @@ import { GoodsTypeService } from '../../service/goods-type/goods-type.service';
     { name: 'Access', schema: AccessSchema, collection: 'access' },
     { name: 'RoleAccess', schema: RoleAccessSchema, collection: 'role_access' },
     { name: 'Focus', schema: FocusSchema, collection: 'focus' },
-    { name: 'GoodsType', schema: GoodsTypeSchema, collection: 'goods_type' }
+    { name: 'GoodsType', schema: GoodsTypeSchema, collection: 'goods_type' },
+    { name: 'GoodsTypeAttribute', schema: GoodsTypeAttributeSchema, collection: 'goods_type_attribute' }
   ])],
-  controllers: [MainController, LoginController, ManagerController, RoleController, AccessController, FocusController, GoodsTypeController],
-  providers: [ToolsService, AdminService, RoleService, AccessService, RoleAccessService, FocusService, GoodsTypeService],
+  controllers: [MainController, LoginController, ManagerController, RoleController, AccessController, FocusController, GoodsTypeController, GoodsTypeAttributeController],
+  providers: [ToolsService, AdminService, RoleService, AccessService, RoleAccessService, FocusService, GoodsTypeService, GoodsTypeAttributeService],
   exports: [AdminService, RoleService, AccessService, RoleAccessService]
 })
 export class AdminModule { }
