@@ -5,7 +5,6 @@
     <div class="panel panel-default">
       <div class="panel-heading clear">
         <span>类型----<%=goodsType.title%></span>
-
         <a href="/<%=config.adminPath%>/goodsTypeAttribute/add?id=<%=goodsType._id%>"
           class="btn btn-primary fr">增加商品类型属性</a>
       </div>
@@ -23,6 +22,37 @@
             </tr>
           </thead>
           <tbody>
+            <%for(var i=0;i<list.length;i++){%>
+            <tr>
+              <td><%=list[i].title%></td>
+              <td><%=goodsType.title%></td>
+              <td>
+                <%if(list[i].attr_type==1){%>
+                单行文本框
+                <%}else if(list[i].attr_type==2){%>
+                多行文本框
+                <%}else if(list[i].attr_type==3){%>
+                select下拉框
+                <%}%>                                                
+              </td>
+              <td><%=list[i].attr_value%></td>
+              <td><%=helper.formatTime(list[i].add_time)%></td>
+              <td class="text-center">
+                <%if(list[i].status==1){%>
+                <img src="/admin/images/yes.gif"
+                  onclick="app.changeStatus(this,'goodsTypeAttribute','status','<%=list[i]._id%>')" />
+                <%}else{%>
+                <img src="/admin/images/no.gif"
+                  onclick="app.changeStatus(this,'goodsTypeAttribute','status','<%=list[i]._id%>')" />
+                <%}%>
+              </td>             
+              <td class="text-center">                           
+                <a href="/<%=config.adminPath%>/goodsTypeAttribute/edit?id=<%=list[i]._id%>">修改</a>　
+                <a class="delete"
+                  href="/<%=config.adminPath%>/goodsTypeAttribute/delete?id=<%=list[i]._id%>&cate_id=<%=list[i].cate_id%>">删除</a>
+              </td>
+            </tr>
+            <%}%>
           </tbody>
         </table>
       </div>
@@ -30,5 +60,4 @@
   </div>
 </div>
 </body>
-
 </html>
