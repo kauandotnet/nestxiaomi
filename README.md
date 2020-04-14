@@ -24,6 +24,13 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
+
+## FrontEnd Demo Page
+http://167.179.83.18/
+
+## BackEnd Demo Page
+http://167.179.83.18/admin
+
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
