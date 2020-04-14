@@ -1,17 +1,18 @@
 import * as mongoose from 'mongoose';
+
 let Schema = mongoose.Schema;
 const d = new Date();
 export const GoodsCateSchema = new mongoose.Schema({
   title: { type: String },
   cate_img: { type: String },
   link: {
-    type: String
+    type: String,
   },
   template: {   /*指定当前分类的模板*/
-    type: String
+    type: String,
   },
   pid: {
-    type: Schema.Types.Mixed  //混合类型 
+    type: Schema.Types.Mixed,  //混合类型
   },
   sub_title: { type: String },          /*seo相关的标题  关键词  描述*/
   keywords: { type: String },
@@ -19,10 +20,10 @@ export const GoodsCateSchema = new mongoose.Schema({
   status: { type: Number, default: 1 },
   sort: {
     type: Number,
-    default: 100
+    default: 100,
   },
   add_time: {
     type: Number,
-    default: d.getTime()
-  }
+    default: d.getTime(),
+  },
 });

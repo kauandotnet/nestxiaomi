@@ -1,0 +1,82 @@
+<%- include ../public/page_header.ejs %>
+<script type="text/javascript" src="/admin/js/jqPaginator.js"></script>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading clear">
+                <a href="/<%= config.adminPath %>/nav/add" class="btn btn-primary fr">Add Nav</a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr class="th">
+                        <th>Title</th>
+                        <th>Related Products</th>
+                        <th>Link</th>
+                        <th>Location</th>
+                        <th class="text-center">Sort</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Operation</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% for(var i = 0;i < list.length;i++){ %>
+                        <tr>
+                            <td><%= list[i].title %></td>
+                            <td><%= list[i].relation %></td>
+                            <td><%= list[i].link %></td>
+                            <td>
+                                <% if(list[i].position == 1){ %>
+                                    Top
+                                <% }else if(list[i].position == 2){ %>
+                                    Middle
+                                <% }else{ %>
+                                    Bottom
+                                <% } %>
+                            </td>
+                            <td class="text-center"><span
+                                        onclick="app.editNum(this,'nav','sort','<%= list[i]._id %>')"><%= list[i].sort %></span>
+                            </td>
+                            <td class="text-center">
+                                <% if(list[i].status == 1){ %>
+                                    <img src="/admin/images/yes.gif"
+                                         onclick="app.changeStatus(this,'nav','status','<%= list[i]._id %>')"/>
+                                <% }else{ %>
+                                    <img src="/admin/images/no.gif"
+                                         onclick="app.changeStatus(this,'nav','status','<%= list[i]._id %>')"/>
+                                <% } %>
+                            </td>
+                            <td class="text-center"><a
+                                        href="/<%= config.adminPath %>/nav/edit?id=<%= list[i]._id %>">Modify</a>
+                                　<a class="delete"
+                                    href="/<%= config.adminPath %>/nav/delete?id=<%= list[i]._id %>">Delete</a>
+                            </td>
+                        </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination fr" id="pagination"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script>
+  $('#pagination').jqPaginator({
+    totalPages: <%= totalPages %>,
+    visiblePages: 10,
+    currentPage: <%= page %>,
+    onPageChange: function(num, type) {
+      // console.log(num,type);
+      if (type == 'change') {
+        location.href = "/<%= config.adminPath %>/nav?page=" + num;
+      }
+    }
+  });
+</script>
+
+</html>

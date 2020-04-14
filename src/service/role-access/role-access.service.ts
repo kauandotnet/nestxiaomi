@@ -3,50 +3,51 @@ import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class RoleAccessService {
-  constructor(@InjectModel('RoleAccess') private readonly RoleAccessModel) { }
+
+  constructor(@InjectModel('RoleAccess') private roleAccessModel) {
+  }
 
   async find(json, fields?: string) {
     try {
-      return await this.RoleAccessModel.find(json, fields);
+      return await this.roleAccessModel.find(json, fields);
     } catch (error) {
-      console.log(error);
-      return null;
+      return [];
     }
   }
 
   async add(json) {
     try {
-      let roleAccess = new this.RoleAccessModel(json);
-      return await roleAccess.save();
+      var role = new this.roleAccessModel(json);
+      var result = await role.save();
+      return result;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }
 
   async update(json1, json2) {
     try {
-      return await this.RoleAccessModel.updateOne(json1, json2);
+      var result = await this.roleAccessModel.updateOne(json1, json2);
+      return result;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }
 
   async delete(json) {
     try {
-      return await this.RoleAccessModel.deleteOne(json);
+      var result = await this.roleAccessModel.deleteOne(json);
+      return result;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }
 
   async deleteMany(json) {
     try {
-      return await this.RoleAccessModel.deleteMany(json);
+      var result = await this.roleAccessModel.deleteMany(json);
+      return result;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }

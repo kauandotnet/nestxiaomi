@@ -5,7 +5,8 @@ import { GoodsCateInterface } from '../../interface/goods_cate_interface';
 @Injectable()
 export class GoodsCateService {
 
-  constructor(@InjectModel('GoodsCate') private readonly goodsCateModel) { }
+  constructor(@InjectModel('GoodsCate') private readonly goodsCateModel) {
+  }
 
   async find(json: GoodsCateInterface = {}, fields?: string) {
     try {
@@ -46,4 +47,5 @@ export class GoodsCateService {
   getModel() {
     return this.goodsCateModel;
   }
+
 }

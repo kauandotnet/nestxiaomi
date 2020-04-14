@@ -1,0 +1,78 @@
+<%- include ../public/page_header.ejs %>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Edit Nav
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive input-form">
+                    <form action="/<%= config.adminPath %>/nav/doEdit" method="post">
+                        <ul>
+                            <input type="hidden" name="_id" value="<%= list._id %>"/>
+                            <input type="hidden" name="prevPage" value="<%= prevPage %>"/>
+
+                            <li><span>Title:</span> <input type="text" name="title" value="<%= list.title %>"/></li>
+
+                            <li><span>Location: </span>
+
+                                <select name="position" id="position">
+                                    <option value="1" <% if(list.position == 1){ %>selected
+                                            <% } %>
+                                    >Top
+                                    </option>
+                                    <option value="2" <% if(list.position == 2){ %>selected
+                                            <% } %>
+                                    >Middle
+                                    </option>
+                                    <option value="3" <% if(list.position == 3){ %>selected
+                                            <% } %>
+                                    >Bottom
+                                    </option>
+                                </select>
+                            </li>
+                            <li><span>Related Products:</span> <input type="text" name="relation"
+                                                                      value="<%= list.relation %>" class="input"/>
+                            </li>
+                            <li><span>Link:</span> <input type="text" name="link" value="<%= list.link %>"/></li>
+                            <li><span>Open in a new window: </span>
+                                <select name="is_opennew" id="is_opennew">
+                                    <option value="1" <% if(list.is_opennew == 1){ %>selected
+                                            <% } %>
+                                    >No
+                                    </option>
+                                    <option value="2" <% if(list.is_opennew == 2){ %>selected
+                                            <% } %>
+                                    >Yes
+                                    </option>
+                                </select>
+
+                            <li><span>Sort:</span> <input type="text" name="sort" value="<%= list.sort %>"/></li>
+
+                            <li><span>Status:</span>
+                                <input type="radio" name="status"
+                                <% if(list.status == 1){ %> checked
+                                        <% } %>
+                                       value="1" id="a"/> <label for="a">Show</label>
+                                <input type="radio"
+                                <% if(list.status == 0){ %>
+                                       checked
+                                        <% } %>
+                                       name="status" value="0" id="b"/><label for="b">Hide</label> 　
+                            </li>
+                            <li>
+                                <br/>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+<%- include ../public/page_header.ejs %>
+<!--end header -->
+
+<!-- start banner_x -->
+<% include ../public/banner.ejs %>
+<!-- end banner_x -->
+
+<script src="/default/js/jqPaginator.js"></script>
+
+<link rel="stylesheet" href="/default/css/order.css"/>
+
+
+<!-- self_info -->
+<div class="grzxbj">
+    <div class="selfinfo center">
+        <div class="lfnav fl">
+            <div class="ddzx">User Center</div>
+            <div class="subddzx">
+                <% include ./left_aside.ejs %>
+            </div>
+        </div>
+        <div class="rtcont fr">
+            <h1>My Orders</h1>
+            <div class="uc-content-box">
+                <div class="box-hd">
+                    <div class="more clearfix">
+                        <ul class="filter-list J_orderType">
+                            <li class="first active"><a href="/user/order">All</a></li>
+                            <li><a href="/user/order?order_status=0">Waiting for payment</a></li>
+                            <li><a href="/user/order?order_status=1">Paid</a></li>
+<!--                            <li><a href="/user/order?order_status=3">Waiting for receiving</a></li>-->
+<!--                            <li><a href="/user/order?order_status=6">Closed</a></li>-->
+                        </ul>
+<!--                        <form id="J_orderSearchForm" class="search-form clearfix" action="/user/order" method="get">-->
+
+<!--                            <input class="search-text" type="search" id="J_orderSearchKeywords" name="keywords"-->
+<!--                                   autocomplete="off" placeholder="">-->
+<!--                            <input type="submit" class="search-btn iconfont" value="search">-->
+<!--                        </form>-->
+                    </div>
+                </div>
+                <div class="box-bd">
+                    <table class="table">
+                        <% for(var i = 0;i < list.length;i++){ %>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="order-summary">
+                                        <h2>
+                                            <% if(list[i].order_status == 0){ %>
+                                                Waiting for payment
+                                            <% }else if(list[i].order_status == 1){ %>
+                                                Paid
+                                            <% }else if(list[i].order_status == 2){ %>
+                                                Dispatched
+                                            <% }else if(list[i].order_status == 3){ %>
+                                                Delivered
+                                            <% }else if(list[i].order_status == 4){ %>
+                                                Completed
+                                            <% }else if(list[i].order_status == 5){ %>
+                                                Returned
+                                            <% }else if(list[i].order_status == 6){ %>
+                                                Cancelled
+                                            <% } %>
+                                        </h2>
+                                        <p>
+                                            <%= helper.formatTime(list[i].add_time) %>| <%= list[i].name %> |
+                                            Order No.：<%= list[i].order_id %> | Sum：<%= list[i].all_price %> Yuan
+                                        </p>
+
+                                    </div>
+
+                                    <% for(var j = 0;j < list[i].orderItems.length;j++){ %>
+                                        <div class="order-info clearfix">
+                                            <div class="col_pic">
+                                                <img src="/<%= list[i].orderItems[j].product_img %>"/>
+                                            </div>
+                                            <div class="col_title">
+                                                <p><%= list[i].orderItems[j].product_title %></p>
+                                                <p><%= list[i].orderItems[j].product_price %> Yuan
+                                                    × <%= list[i].orderItems[j].product_num %></p>
+                                            </div>
+                                        </div>
+                                    <% } %>
+                                </td>
+
+                                <td>
+                                    <% if(list[i].pay_status == 1){ %>
+                                        <a class="delete btn" href="/user/orderinfo?id=<%= list[i]._id %>">Detail</a>
+                                        <br>
+                                        <br>
+<!--                                        <a class="delete btn" href="#">申请售后</a>-->
+
+                                    <% }else{ %>
+                                        <a class="delete btn btn-primary"
+                                           href="/buy/confirm?id=<%= list[i]._id %>">Pay</a>
+
+                                        <br>
+                                        <br>
+<!--                                        <a class="delete btn" href="/user/orderinfo?id=<%= list[i]._id %>">Detail</a>-->
+                                    <% } %>
+
+                                </td>
+                            </tr>
+
+                        <% } %>
+
+                    </table>
+
+                    <div id="page" class="pagination fr"></div>
+                </div>
+            </div>
+
+            <script>
+
+              $('#page').jqPaginator({
+                totalPages: <%= totalPages %>,
+                visiblePages: 8,
+                currentPage:  <%= page %>,
+                onPageChange: function(num, type) {
+                  if (type == 'change') {
+                    location.href = "/user/order?page=" + num + "&order_status=<%= order_status %>&keywords=<%= keywords %>";
+                  }
+                }
+              });
+
+            </script>
+
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<!-- self_info -->
+
+<footer class="mt20 center">
+    <div>NestXiaomi 2020</div>
+</footer>
+</body>
+
+</html>

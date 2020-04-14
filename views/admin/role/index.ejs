@@ -1,36 +1,37 @@
-<%- include('../public/page_header'); %>
+<%- include ../public/page_header.ejs %>
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <thead>
-          <tr class="th">
-            <th>title</th>
-            <th>description</th>
-            <th>add time</th>
-            <th class="text-center">operation</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% for (let i = 0; i < roleList.length; i++) { %>
-          <tr>
-            <td><%= roleList[i].title %></td>
-            <td><%= roleList[i].description %></td>
-            <td><%= helper.formatTime(roleList[i].add_time) %></td>
-            <td class="text-center">
-              <a href="/<%= config.adminPath %>/role/auth?id=<%= roleList[i]._id %>">auth</a>
-              <a href="/<%= config.adminPath %>/role/edit?id=<%= roleList[i]._id %>">edit</a>
-              <a class="delete" href="/<%= config.adminPath %>/role/delete?id=<%= roleList[i]._id %>">delete</a>
-            </td>
-          </tr>
-          <% } %>
-        </tbody>
-      </table>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr class="th">
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Add Time</th>
+                    <th class="text-center">Operation</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(var i = 0;i < roleList.length;i++){ %>
+                    <tr>
+                        <td><%= roleList[i].title %></td>
+                        <td><%= roleList[i].description %></td>
+                        <td><%= helper.formatTime(roleList[i].add_time) %></td>
+                        <td class="text-center"><a
+                                    href="/<%= config.adminPath %>/role/auth?id=<%= roleList[i]._id %>">Auth</a> 　<a
+                                    href="/<%= config.adminPath %>/role/edit?id=<%= roleList[i]._id %>">Modify</a> 　<a
+                                    class="delete"
+                                    href="/<%= config.adminPath %>/role/delete?id=<%= roleList[i]._id %>">Delete</a>
+                        </td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+
+        </div>
     </div>
-  </div>
 </div>
 
 </body>
-
 </html>

@@ -1,54 +1,68 @@
-<%- include('../public/page_header'); %>
+<%- include ../public/page_header.ejs %>
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        edit access
-      </div>
-      <div class="panel-body">
-        <div class="table-responsive input-form">
-          <form action="/<%= config.adminPath %>/access/doEdit" method="POST">
-            <input type="hidden" name="_id" value="<%= list._id %>">
-            <ul>
-              <li> 模块名称: <input type="text" name="module_name" value="<%= list.module_name %>"></li>
-              <li>
-                节点类型:
-                <select name="type" id="type">
-                  <option value="1" <% if (list.type == 1) { %>selected<% } %>>module</option>
-                  <option value="2" <% if (list.type == 2) { %>selected<% } %>>menu</option>
-                  <option value="3" <% if (list.type == 3) { %>selected<% } %>>action</option>
-                </select>
-              </li>
-              <li> 操作名称: <input type="text" name="action_name" value="<%= list.action_name %>"></li>
-              <li> 操作地址: <input type="text" name="url" value="<%= list.url %>"></li>
-              <li> 所属模块:
-                <select name="module_id" id="module_id">
-                  <option value="0">module</option>
-                  <% for (let i = 0; i < moduleList.length; i++) { %>
-                  <% if (moduleList[i]._id.toString() == list.module_id.toString()) { %>
-                  <option selected value="<%= moduleList[i]._id %>"><%= moduleList[i].module_name %></option>
-                  <% } else { %>
-                  <option value="<%= moduleList[i]._id %>"><%= moduleList[i].module_name %></option>
-                  <% } %>
-                  <% } %>
-                </select>
-              </li>
-              <li> 排　　序: <input type="text" name="sort" value="100" value="<%= list.sort %>"></li>
-              <li> 描　　述 :
-                <textarea name="description" id="description" cols="60" rows="5"><%= list.description %></textarea>
-              </li>
-              <li>
-                <br />
-                <button type="submit" class="btn btn-default">Submit</button>
-              </li>
-            </ul>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</body>
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Modify Authy
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive input-form">
+                    <form action="/<%= config.adminPath %>/access/doEdit" method="post">
+                        <ul>
+                            <input type="hidden" name="_id" value="<%= list._id %>"/>
+                            <li> Name: <input type="text" name="module_name" value="<%= list.module_name %>"/></li>
+                            <li>
+                                Type:
+                                <!-- 1、表示模块   2、表示菜单     3、操作 -->
+                                <select name="type" id="type">
+                                    <option value="1" <% if(list.type == 1){ %>selected
+                                            <% } %>
+                                    >Module
+                                    </option>
+                                    <option value="2" <% if(list.type == 2){ %>selected
+                                            <% } %>
+                                    >Menu
+                                    </option>
+                                    <option value="3" <% if(list.type == 3){ %>selected
+                                            <% } %>
+                                    >Action
+                                    </option>
+                                </select>
+                            </li>
+                            <li>Action Name: <input type="text" name="action_name" value="<%= list.action_name %>"/>
+                            </li>
+                            <li>URL: <input type="text" name="url" value="<%= list.url %>"/></li>
 
+                            <li>Belongs To:
+                                <select name="module_id" id="module_id">
+                                    <option value="0">---Top Module--</option>
+                                    <% for(var i = 0;i < moduleList.length;i++){ %>
+                                    <% if(moduleList[i]._id.toString() == list.module_id.toString()){ %>
+                                    <option selected
+                                            value="<%= moduleList[i]._id %>"><%= moduleList[i].module_name %></option>
+                                    <% }else{ %>
+                                    <option value="<%= moduleList[i]._id %>"><%= moduleList[i].module_name %></option>
+                                    <% } %>
+                                    <% } %>
+                                </select>
+                            </li>
+                            <li>Sort: <input type="text" name="sort" value="<%= list.sort %>"/></li>
+                            <li>Description :
+                                <textarea name="description" id="description" cols="60"
+                                          rows="5"><%= list.description %></textarea>
+                            </li>
+                            <li>
+                                <br/>
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
 </html>

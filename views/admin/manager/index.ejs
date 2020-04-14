@@ -1,36 +1,38 @@
-<%- include('../public/page_header'); %>
+<%- include ../public/page_header.ejs %>
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <thead>
-          <tr class="th">
-            <th>username</th>
-            <th>mobile</th>
-            <th>email</th>
-            <th>title</th>
-            <th class="text-center">operation</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% for (let i = 0; i < adminResult.length; i++) { %>
-          <tr>
-            <td><%= adminResult[i].username %></td>
-            <td><%= adminResult[i].mobile %></td>
-            <td><%= adminResult[i].email %></td>
-            <td><%= adminResult[i].role[0].title %></td>
-            <td class="text-center">
-              <a href="/<%= config.adminPath %>/manager/edit?id=<%= adminResult[i]._id %>">edit</a>
-              <a class="delete" href="/<%= config.adminPath %>/manager/delete?id=<%= adminResult[i]._id %>">delete</a>
-            </td>
-          </tr>
-          <% } %>
-        </tbody>
-      </table>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr class="th">
+                    <th>Username</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th class="text-center">Operation</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(var i = 0;i < adminResult.length;i++){ %>
+                    <tr>
+                        <td><%= adminResult[i].username %></td>
+                        <td><%= adminResult[i].mobile %></td>
+                        <td><%= adminResult[i].email %></td>
+                        <td><%= adminResult[i].role[0].title %></td>
+                        <td class="text-center"><a
+                                    href="/<%= config.adminPath %>/manager/edit?id=<%= adminResult[i]._id %>">Modify</a>
+                            　<a
+                                    class="delete"
+                                    href="/<%= config.adminPath %>/manager/delete?id=<%= adminResult[i]._id %>">Delete</a>
+                        </td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
     </div>
-  </div>
 </div>
-</body>
 
+</body>
 </html>

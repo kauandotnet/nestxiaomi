@@ -1,9 +1,17 @@
-import { format } from 'silly-datetime';
+import {
+  format,
+} from 'silly-datetime';
+
+let showdown = require('showdown');
+
+import { extname } from 'path';
 
 export class Helper {
-  static title = 'i am a global title';
+
+  static title = '我是全局的title';
 
   static substring(str: string, start: number, end: number) {
+
     if (end) {
       return str.substring(start, end);
     } else {
@@ -12,6 +20,22 @@ export class Helper {
   }
 
   static formatTime(params) {
+
     return format(params, 'YYYY-MM-DD HH:mm');
   }
+
+  static formatImg(dir, width, height) {
+
+    height = height || width;
+    return dir + '_' + width + 'x' + height + extname(dir);
+  }
+
+  static formatAttr(str) {
+
+    let converter = new showdown.Converter();
+    let html = converter.makeHtml(str);
+    return html;
+  }
+
+
 }

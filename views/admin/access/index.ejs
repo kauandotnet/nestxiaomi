@@ -1,71 +1,69 @@
-<%- include('../public/page_header'); %>
+<%- include ../public/page_header.ejs %>
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <thead>
-          <tr class="th">
-            <th>module name</th>
-            <th>type</th>
-            <th>action name</th>
-            <th>url</th>
-            <th>sort</th>
-            <th>description</th>
-            <th class="text-center">operation</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% for (let i = 0; i < list.length; i++) { %>
-          <tr>
-            <td><%= list[i].module_name %></td>
-            <td>
-              <% if (list[i].type == 1) { %>
-              module
-              <% } else if (list[i].type == 2) { %>
-              menu
-              <% } else { %>
-              action
-              <% } %>
-            </td>
-            <td><%= list[i].action_name %></td>
-            <td><%= list[i].url %></td>
-            <td><%= list[i].sort %></td>
-            <td><%= list[i].description %></td>
-            <td class="text-center">
-              <a href="/<%= config.adminPath %>/access/edit?id=<%= list[i]._id %>">edit</a>
-            </td>
-          </tr>
-          <% for (let j = 0; j < list[i].items.length; j++) { %>
-          <tr>
-            <td>---<%= list[i].items[j].module_name %></td>
-            <td>
-              <% if (list[i].items[j].type ==1) { %>
-              module
-              <% } else if (list[i].items[j].type == 2) { %>
-              menu
-              <% } else { %>
-              action
-              <% } %>
-            </td>
-            <td><%= list[i].items[j].action_name %></td>
-            <td><%= list[i].items[j].url %></td>
-            <td><%= list[i].items[j].sort %></td>
-            <td><%= list[i].items[j].description %></td>
-            <td class="text-center">
-              <a href="/<%= config.adminPath %>/access/edit?id=<%= list[i].items[j]._id %>">edit</a>
-              <a class="delete" href="/<%= config.adminPath %>/access/delete?id=<%= list[i].items[j]._id %>">delete</a>
-            </td>
-          </tr>
-          <% } %>
-          <% } %>
-        </tbody>
-      </table>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Module Name</th>
+                    <th>Type</th>
+                    <th>Action Name</th>
+                    <th>Action URL</th>
+                    <th>Sort</th>
+                    <th>Description</th>
+                    <th class="text-center">Operation</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(var i = 0;i < list.length;i++){ %>
+                    <tr>
+                        <td><%= list[i].module_name %></td>
+                        <td>
+                            <% if(list[i].type == 1){ %>
+                                Module
+                            <% }else if(list[i].type == 2){ %>
+                                Menu
+                            <% }else{ %>
+                                Action
+                            <% } %>
+                        </td>
+                        <td><%= list[i].action_name %></td>
+                        <td><%= list[i].url %></td>
+                        <td><%= list[i].sort %></td>
+                        <td><%= list[i].description %></td>
+                        <td class="text-center"><a href="/<%= config.adminPath %>/access/edit?id=<%= list[i]._id %>">Modify</a>
+                        </td>
+                    </tr>
+                    <% for(var j = 0;j < list[i].items.length;j++){ %>
+                        <tr>
+                            <td>----<%= list[i].items[j].module_name %></td>
+                            <td>
+                                <% if(list[i].items[j].type == 1){ %>
+                                    Module
+                                <% }else if(list[i].items[j].type == 2){ %>
+                                    Menu
+                                <% }else{ %>
+                                    Action
+                                <% } %>
+                            </td>
+                            <td><%= list[i].items[j].action_name %></td>
+                            <td><%= list[i].items[j].url %></td>
+                            <td><%= list[i].items[j].sort %></td>
+                            <td><%= list[i].items[j].description %></td>
+                            <td class="text-center">
+                                <a href="/<%= config.adminPath %>/access/edit?id=<%= list[i].items[j]._id %>">Modify</a>
+                                <a class="delete"
+                                   href="/<%= config.adminPath %>/access/delete?id=<%= list[i].items[j]._id %>">Delete</a>
+                            </td>
+                        </tr>
+                    <% } %>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
     </div>
-
-  </div>
 </div>
-
 </body>
 
 </html>

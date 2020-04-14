@@ -1,89 +1,110 @@
 import { Controller, Get, Render, Post, Body, Response, Query } from '@nestjs/common';
-import { Config } from '../../../config/config';
 import { AccessService } from '../../../service/access/access.service';
-import * as mongoose from 'mongoose';
+
 import { ToolsService } from '../../../service/tools/tools.service';
+
+
+import { Config } from '../../../config/config';
+import * as mongoose from 'mongoose';
 
 @Controller(`${Config.adminPath}/access`)
 export class AccessController {
-  constructor(
-    private accessService: AccessService,
-    private toolsService: ToolsService
-  ) { }
+
+  constructor(private accessService: AccessService, private toolsService: ToolsService) {
+  }
 
   @Get()
   @Render('admin/access/index')
   async index() {
-    let result = await this.accessService.getModel().aggregate([{
-      $match: {
-        'module_id': '0'
-      }
-    }, {
-      $lookup: {
-        from: 'access',
-        localField: '_id',
-        foreignField: 'module_id',
-        as: 'items'
-      }
-    }]);
+    //1、在access表中找出  module_id=0的数据
+    //2、让access表和access表关联    条件：找出access表中module_id等于_id的数据
+    let result = await this.accessService.getModel().aggregate([
+      {
+        $lookup: {
+          from: 'access',
+          localField: '_id',
+          foreignField: 'module_id',
+          as: 'items',
+        },
+      },
+      {
+        $match: {
+          'module_id': '0',
+        },
+      },
+    ]);
+    // console.log(JSON.stringify(result));
     return {
-      list: result
+      list: result,
     };
   }
 
   @Get('add')
   @Render('admin/access/add')
   async add() {
+    //获取模块列表
     let result = await this.accessService.find({ 'module_id': '0' });
+    // console.log(result);
     return {
-      moduleList: result
+      moduleList: result,
     };
   }
 
   @Post('doAdd')
-  doAdd(@Body() body, @Response() res) {
+  async doAdd(@Body() body, @Response() res) {
     let module_id = body.module_id;
-    if (module_id != '0') {
-      body.module_id = mongoose.Types.ObjectId(module_id);
+    if (module_id != 0) {
+      body.module_id = mongoose.Types.ObjectId(module_id);   //注意
     }
-    this.accessService.add(body);
-    this.toolsService.success(res, '/access');
+    await this.accessService.add(body);
+    this.toolsService.success(res, `/${Config.adminPath}/access`);
   }
 
   @Get('edit')
   @Render('admin/access/edit')
   async edit(@Query() query) {
-    let moduleList = await this.accessService.find({ 'module_id': '0' });
+    //获取模块列表
+    let result = await this.accessService.find({ 'module_id': '0' });
+
     let accessResult = await this.accessService.find({ '_id': query.id });
+
     return {
-      moduleList,
-      list: accessResult[0]
+      list: accessResult[0],
+      moduleList: result,
     };
   }
 
+
   @Post('doEdit')
-  doEdit(@Body() body, @Response() res) {
+  async doEdit(@Body() body, @Response() res) {
+
     let module_id = body.module_id;
     let _id = body._id;
     try {
-      if (module_id != '0') {
-        body.module_id = mongoose.Types.ObjectId(module_id);
+      if (module_id != 0) {
+        body.module_id = mongoose.Types.ObjectId(module_id);   //注意
       }
-      this.accessService.update({ '_id': _id }, body);
-      this.toolsService.success(res, '/access');
+
+      await this.accessService.update({ '_id': _id }, body);
+      this.toolsService.success(res, `/${Config.adminPath}/access`);
+
     } catch (error) {
-      console.log(error);
-      this.toolsService.error(res, 'illegal request', `/access/edit?id=${_id}`);
+      this.toolsService.error(res, '非法请求', `/${Config.adminPath}/access/edit?id=${_id}`);
     }
   }
 
+
   @Get('delete')
-  delete(@Query() query, @Response() res) {
+  async delete(@Query() query, @Response() res) {
+
     try {
-      this.accessService.delete({ '_id': query.id });
-      this.toolsService.success(res, '/access');
+      await this.accessService.delete({ '_id': query.id });
+      this.toolsService.success(res, `/${Config.adminPath}/access`);
     } catch (error) {
-      this.toolsService.error(res, 'illegal request', `/access/delete?id=${query.id}`);
+      this.toolsService.error(res, '非法请求', `/${Config.adminPath}/access`);
     }
+
+
   }
+
 }

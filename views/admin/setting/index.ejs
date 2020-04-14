@@ -1,0 +1,59 @@
+<%- include ../public/page_header.ejs %>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Shop Setting
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive input-form">
+                    <form action="/<%= config.adminPath %>/setting/doEdit" method="post" enctype="multipart/form-data">
+                        <ul class="form_input">
+
+                            <li><span>Title:</span> <input type="text" class="input" name="site_title"
+                                                          value="<%= list.site_title %>"/></li>
+
+                            <li><span>Logo:</span> <input type="file" name="site_logo"/>
+                                <br/>
+                                <span> </span> <img class="pic" src="/<%= list.site_logo %>"/>
+                            </li>
+
+                            <li><span>Keywords:</span> <input type="text" class="input" name="site_keywords"
+                                                           value="<%= list.site_keywords %>"/></li>
+
+                            <li><span>Descriptions:</span> <textarea name="site_description"
+                                                             style="width:600px;"><%= list.site_description %></textarea>
+                            </li>
+
+                            <li><span>Default Pic:</span> <input type="file" name="no_picture"/>
+                                <br/>
+                                <span> </span> <img class="pic" src="/<%= list.no_picture %>"/>
+
+                            </li>
+                            <li><span>ICP:</span> <input type="text" class="input" name="site_icp"
+                                                          value="<%= list.site_icp %>"/></li>
+                            <li><span>Tel:</span> <input type="text" class="input" name="site_tel"
+                                                          value="<%= list.site_tel %>"/></li>
+
+                            <li><span>Search Keywords:</span> <input type="text" class="input" name="search_keywords"
+                                                           value="<%= list.search_keywords %>"/></li>
+
+                            <li><span>Stat Code:</span> <input type="text" class="input" name="tongji_code"
+                                                          value="<%= list.tongji_code %>"/></li>
+                            <li>
+                                <br/>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </li>
+
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

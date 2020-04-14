@@ -1,52 +1,52 @@
-<%- include('../public/page_header'); %>
+<%- include ../public/page_header.ejs %>
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <thead>
-          <tr class="th">
-            <th>title</th>
-            <th>type</th>
-            <th>img</th>
-            <th>link</th>
-            <th class="text-center">sort</th>
-            <th class="text-center">status</th>
-            <th class="text-center">operation</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% for (let i = 0; i < focusList.length; i++) { %>
-          <tr>
-            <td><%= focusList[i].title %></td>
-            <td><%= focusList[i].type %></td>
-            <td><img src="/<%= focusList[i].focus_img %>" width="80"></td>
-            <td><%= focusList[i].link %></td>
-            <td class="text-center">
-              <span onclick="app.editNum(this,'focus','sort','<%= focusList[i]._id %>')">
-                <%= focusList[i].sort %>
-              </span>
-            </td>
-            <td align="center">
-              <% if (focusList[i].status == 1) { %>
-              <img src="/admin/images/yes.gif"
-                onclick="app.changeStatus(this, 'focus', 'status', '<%= focusList[i]._id %>')">
-              <% } else { %>
-              <img src="/admin/images/no.gif"
-                onclick="app.changeStatus(this, 'focus', 'status', '<%= focusList[i]._id %>')">
-              <% } %>
-            </td>
-            <td class="text-center">
-              <a href="/<%= config.adminPath %>/focus/edit?id=<%= focusList[i]._id %>">edit</a>
-              <a class="delete" href="/<%= config.adminPath %>/focus/delete?id=<%= focusList[i]._id %>">delete</a>
-            </td>
-          </tr>
-          <% } %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-</body>
+    <div class="row">
 
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr class="th">
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Pic</th>
+                    <th>URL</th>
+                    <th class="text-center">Sort</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Operation</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(var i = 0;i < focusList.length;i++){ %>
+                <tr>
+                    <td><%= focusList[i].title %></td>
+                    <td><%= focusList[i].type %></td>
+                    <td><img src="/<%= focusList[i].focus_img %>" width="80"/></td>
+                    <td><%= focusList[i].link %></td>
+                    <td class="text-center"><span
+                                onclick="app.editNum(this,'focus','sort','<%= focusList[i]._id %>')"><%= focusList[i].sort %></span>
+                    </td>
+                    <td align="center">
+                        <% if(focusList[i].status == 1){ %>
+                        <img src="/admin/images/yes.gif"
+                             onclick="app.changeStatus(this,'focus','status','<%= focusList[i]._id %>')"/>
+                        <% }else{ %>
+                        <img src="/admin/images/no.gif"
+                             onclick="app.changeStatus(this,'focus','status','<%= focusList[i]._id %>')"/>
+                        <% } %>
+                    </td>
+                    <td class="text-center"><a
+                                href="/<%= config.adminPath %>/focus/edit?id=<%= focusList[i]._id %>">Modify</a> 　<a
+                                class="delete" href="/<%= config.adminPath %>/focus/delete?id=<%= focusList[i]._id %>">Delete</a>
+                    </td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+</body>
 </html>

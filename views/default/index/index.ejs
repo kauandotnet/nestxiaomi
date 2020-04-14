@@ -1,0 +1,140 @@
+<%- include ../public/page_header.ejs %>
+<!-- start banner_x -->
+<div class="banner_x center">
+    <a href="">
+        <div class="logo fl"></div>
+    </a>
+    <div class="nav fl">
+        <ul class="clearfix" id="nav_list">
+            <% for(var i = 0;i < middleNav.length;i++){ %>
+            <li>
+                <a href="#" target=""><%= middleNav[i].title %></a>
+
+                <% if(middleNav[i].subGoods && middleNav[i].subGoods.length > 0) { %>
+                <ol class="children-list clearfix">
+                    <% for(var j = 0;j < middleNav[i].subGoods.length;j++){ %>
+                    <li>
+                        <a href="#">
+                            <img src="<%= middleNav[i].subGoods[j].goods_img %>"/>
+                            <p><%= middleNav[i].subGoods[j].shop_price %></p>
+                        </a>
+                    </li>
+                    <% } %>
+                </ol>
+                <% } %>
+            </li>
+            <% } %>
+        </ul>
+    </div>
+<!--    <div class="search fr">-->
+<!--        <form action="" method="post">-->
+<!--            <div class="text fl">-->
+<!--                <input type="text" class="shuru" placeholder="Redmi">-->
+<!--            </div>-->
+<!--            <div class="submit fl">-->
+<!--                <input type="submit" class="sousuo" value="Search"/>-->
+<!--            </div>-->
+<!--            <div class="clear"></div>-->
+<!--        </form>-->
+<!--        <div class="clear"></div>-->
+<!--    </div>-->
+</div>
+<!-- end banner_x -->
+
+
+<div class="banner_y center">
+    <!--左侧导航开始 -->
+    <div class="nav">
+        <ul>
+            <% for(var i = 0;i < goodsCate.length;i++){ %>
+            <li>
+                <% if(goodsCate[i].link != ""){ %>
+                <a href="<%= goodsCate[i].link %>" target=""><%= goodsCate[i].title %></a>
+                <% }else{ %>
+                <a href="/category/<%= goodsCate[i]._id %>"><%= goodsCate[i].title %></a>
+                <% } %>
+                <div class="pop">
+                    <ol class="cate_list clear">
+                        <% for(var j = 0;j < goodsCate[i].items.length;j++){ %>
+                        <li>
+                            <div class="xuangou_left">
+                                <% if(goodsCate[i].items[j].link != ""){ %>
+                                <a href="<%= goodsCate[i].items[j].link %>" target="">
+                                    <div class="img fl"><img src="<%= goodsCate[i].items[j].cate_img %>"
+                                                             alt="<%= goodsCate[i].items[j].title %>"></div>
+                                    <span class="fl"><%= goodsCate[i].items[j].title %></span>
+                                </a>
+                                <% }else{ %>
+                                <a href="/category/<%= goodsCate[i].items[j]._id %>">
+                                    <div class="img fl"><img src="<%= goodsCate[i].items[j].cate_img %>"
+                                                             alt="<%= goodsCate[i].items[j].title %>"></div>
+                                    <span class="fl"><%= goodsCate[i].items[j].title %></span>
+                                </a>
+                                <% } %>
+                            </div>
+
+                        </li>
+                        <% } %>
+                    </ol>
+                </div>
+            </li>
+            <% } %>
+        </ul>
+    </div>
+
+    <!--左侧导航开始 -->
+
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+
+            <% for(var i = 0;i < focus.length;i++){ %>
+            <div class="swiper-slide">
+                <a href="<%= focus[i].link %>" target="">
+                    <img src="/<%= focus[i].focus_img %>" alt="<%= focus[i].title %>"/>
+                </a>
+            </div>
+            <% } %>
+
+        </div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+</div>
+<!-- end banner -->
+
+<!-- 手机 -->
+<div class="category_item w">
+    <div class="title center">Hot Phones</div>
+    <div class="main center">
+        <div class="category_item_left">
+            <img src="/default/image/shouji.jpg" alt="hot phones">
+        </div>
+
+        <div class="category_item_right">
+            <% for(var i = 0;i < phone.length;i++){ %>
+            <div class="hot fl">
+                <div class="tu">
+<!--                    <a href="#">-->
+                        <img src="<%= helper.formatImg(phone[i].goods_img, 200) %>">
+<!--                    </a>-->
+                </div>
+                <div class="miaoshu">
+                    <%= phone[i].title %>
+                </div>
+                <div class="jiage"><%= phone[i].shop_price %> Yuan</div>
+<!--                <div class="piao">-->
+<!--                    <span><%= phone[i].sub_title %></span>-->
+<!--                </div>-->
+            </div>
+            <% } %>
+        </div>
+
+
+    </div>
+</div>
+
+<%- include ../public/page_footer.ejs %>
+</body>
+</html>

@@ -1,43 +1,49 @@
-<%- include('../public/page_header'); %>
+<%- include ../public/page_header.ejs %>
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        role auth
-      </div>
-      <div class="panel-body">
-        <div class="table-responsive input-form">
-          <form action="/<%= config.adminPath %>/role/doAuth" method="POST">
-            <input type="hidden" name="role_id" value="<%= role_id %>">
-            <table class="table table-bordered">
-              <% for (let i = 0; i < list.length; i++) { %>
-              <tr>
-                <td align="right" style="background: #D8E2FA; padding-right: 10px; width: 150px;">
-                  <label>
-                    <input type="checkbox" class="module_cbo" <% if (list[i].checked) { %>checked<% } %> value="<%= list[i]._id %>" name="access_node[]">&nbsp;&nbsp;
-                    <%= list[i].module_name %>
-                  </label>
-                </td>
-                <td>
-                  <% for (let j = 0; j < list[i].items.length; j++) { %>
-                  &nbsp;&nbsp;
-                  <label>
-                    <input type="checkbox" class="action_cbo"  <% if (list[i].items[j].checked) { %>checked<% } %>  value="<%= list[i].items[j]._id %>" name="access_node[]">
-                    &nbsp;&nbsp;<%= list[i].items[j].action_name %> </label>&nbsp;&nbsp;
-                  <% } %>
-                </td>
-              </tr>
-              <% } %>
-            </table>
-            <input type="submit" value="Submit" class="btn btn-primary">
-          </form>
+    <div class="row">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Role Authy
+            </div>
+            <div class="panel-body">
+
+                <form action="/<%= config.adminPath %>/role/doAuth" method="POST">
+
+                    <input type="hidden" value="<%= role_id %>" name="role_id"/>
+                    <table class="table table-bordered">
+                        <% for(var i = 0;i < list.length;i++){ %>
+                        <tr>
+                            <td align="right" style="background: #D8E2FA; padding-right: 10px; width: 150px;">
+                                <label>
+                                    <input type="checkbox" class="module_cbo"
+                                    <% if(list[i].checked){ %> checked
+                                            <% } %>
+                                           value="<%= list[i]._id %>" name="access_node[]">&nbsp;&nbsp;
+                                    <%= list[i].module_name %>
+                                </label>
+                            </td>
+                            <td>
+                                <% for(var j = 0;j < list[i].items.length;j++){ %>
+                                &nbsp;&nbsp;
+                                <label>
+                                    <input type="checkbox" class="action_cbo"
+                                    <% if(list[i].items[j].checked){ %> checked
+                                            <% } %>
+                                           value="<%= list[i].items[j]._id %>" name="access_node[]">
+                                    &nbsp;&nbsp;<%= list[i].items[j].action_name %></label>&nbsp;
+                                <% } %>
+                            </td>
+                        </tr>
+                        <% } %>
+                    </table>
+                    <input type="submit" value="提交" class="btn btn-primary"/>
+                </form>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 </body>
-
 </html>

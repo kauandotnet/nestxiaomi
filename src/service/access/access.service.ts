@@ -4,41 +4,41 @@ import { AccessInterface } from '../../interface/access.interface';
 
 @Injectable()
 export class AccessService {
-  constructor(@InjectModel('Access') private readonly accessModel) { }
+  constructor(@InjectModel('Access') private readonly accessModel) {
+  }
 
   async find(json: AccessInterface = {}, fields?: string) {
     try {
       return await this.accessModel.find(json, fields);
     } catch (error) {
-      console.log(error);
-      return null;
+      return [];
     }
   }
 
   async add(json: AccessInterface) {
     try {
-      let access = new this.accessModel(json);
-      return await access.save();
+      var access = new this.accessModel(json);
+      var result = await access.save();
+      return result;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }
 
   async update(json1: AccessInterface, json2: AccessInterface) {
     try {
-      return await this.accessModel.updateOne(json1, json2);
+      var result = await this.accessModel.updateOne(json1, json2);
+      return result;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }
 
   async delete(json: AccessInterface) {
     try {
-      return await this.accessModel.deleteOne(json);
+      var result = await this.accessModel.deleteOne(json);
+      return result;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }
@@ -46,4 +46,6 @@ export class AccessService {
   getModel() {
     return this.accessModel;
   }
+
+
 }

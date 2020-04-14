@@ -1,20 +1,12 @@
 import * as mongoose from 'mongoose';
 
-const date = new Date();
-
+const d = new Date();
 export const GoodsTypeSchema = new mongoose.Schema({
-  title: {
-    type: String
-  },
-  description: {
-    type: String
-  },
-  status: {
-    type: Number,
-    default: 1
-  },
+  title: { type: String },
+  description: { type: String },
+  status: { type: Number, default: 1 },
   add_time: {
     type: Number,
-    default: date.getTime()
-  }
+    default: d.getTime(),
+  },
 });

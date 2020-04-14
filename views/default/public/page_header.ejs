@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="order by dede58.com"/>
+    <title>Nest Xiaomi Store</title>
+    <link rel="stylesheet" type="text/css" href="/default/css/style.css">
+    <link rel="stylesheet" href="/default/css/swiper.min.css">
+    <script src="/default/js/jquery-1.10.1.js"></script>
+    <script src="/default/js/swiper.min.js"></script>
+    <script src="/default/js/base.js"></script>
+</head>
+<body>
+<!-- start header -->
+<header>
+    <div class="top center">
+        <div class="left fl">
+            <ul>
+                <% for(var i = 0;i < topNav.length;i++){ %>
+                    <li><a href="<%= topNav[i].link %>" <% if(topNav[i].is_opennew == 2){ %>target=""
+                                <% } %>
+                        ><%= topNav[i].title %></a></li>
+                <% } %>
+                <div class="clear"></div>
+            </ul>
+        </div>
+        <div class="right fr">
+            <div class="gouwuche fr"><a href="/cart">Cart</a></div>
+            <div class="fr">
+                <ul>
+                    <% if(userinfo && userinfo.phone){ %>
+                        <li class="userinfo">
+                            <a href="#"><%= userinfo.phone %></a>
+                            <i class="i"></i>
+                            <ol>
+                                <li><a href="/user/welcome">Personal Center</a></li>
+                                <li><a href="/pass/loginOut">Logout</a></li>
+                            </ol>
+
+                        </li>
+                    <% }else{ %>
+                        <li><a href="/pass/login" target="">Login</a></li>
+<!--                        <li>|</li>-->
+<!--                        <li><a href="/pass/registerStep1" target="">Register</a></li>-->
+                    <% } %>
+                    <li>|</li>
+                    <!--                    <li><a href="">Message</a></li>-->
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</header>
+<!--end header -->

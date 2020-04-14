@@ -1,0 +1,118 @@
+<%- include ../public/page_header.ejs %>
+<script type="text/javascript" src="/admin/js/jqPaginator.js"></script>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a href="/<%= config.adminPath %>/goods/add" class="btn btn-primary">Add Goods</a>
+    </div>
+
+    <div class="panel-body">
+        <form role="form" class="form-inline" method="get" action="/<%= config.adminPath %>/goods">
+            <div class="form-group">
+                <!--                <label for="name">Name</label>-->
+                <input type="text" class="form-control" value="<%= keyword %>" id="keyword" name="keyword"
+                       placeholder="input sth. case sensitive">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-default">Search</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr class="th">
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <!--                <th>click</th>-->
+                    <th>selling</th>
+                    <th>Best</th>
+                    <th>New</th>
+                    <th>Hot</th>
+                    <th>Sort</th>
+                    <!--                <th>Store</th>                             -->
+                    <th class="text-center">Operation</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(var i = 0;i < goodsList.length;i++){ %>
+                    <tr>
+                        <td><%= goodsList[i].title %></td>
+                        <td><%= goodsList[i].shop_price %></td>
+                        <!--                        <td><%= goodsList[i].click_count %></td>    -->
+                        <td class="text-center">
+                            <% if(goodsList[i].status == 1){ %>
+                                <img src="/admin/images/yes.gif"
+                                     onclick="app.changeStatus(this,'goods','status','<%= goodsList[i]._id %>')"/>
+                            <% }else{ %>
+                                <img src="/admin/images/no.gif"
+                                     onclick="app.changeStatus(this,'goods','status','<%= goodsList[i]._id %>')"/>
+                            <% } %>
+                        </td>
+
+                        <td class="text-center">
+                            <% if(goodsList[i].is_best == 1){ %>
+                                <img src="/admin/images/yes.gif"
+                                     onclick="app.changeStatus(this,'goods','is_best','<%= goodsList[i]._id %>')"/>
+                            <% }else{ %>
+                                <img src="/admin/images/no.gif"
+                                     onclick="app.changeStatus(this,'goods','is_best','<%= goodsList[i]._id %>')"/>
+                            <% } %>
+
+                        </td>
+
+                        <td class="text-center">
+                            <% if(goodsList[i].is_new == 1){ %>
+                                <img src="/admin/images/yes.gif"
+                                     onclick="app.changeStatus(this,'goods','is_new','<%= goodsList[i]._id %>')"/>
+
+                            <% }else{ %>
+                                <img src="/admin/images/no.gif"
+                                     onclick="app.changeStatus(this,'goods','is_new','<%= goodsList[i]._id %>')"/>
+                            <% } %>
+                        </td>
+
+                        <td class="text-center">
+                            <% if(goodsList[i].is_hot == 1){ %>
+                                <img src="/admin/images/yes.gif"
+                                     onclick="app.changeStatus(this,'goods','is_hot','<%= goodsList[i]._id %>')"/>
+                            <% }else{ %>
+                                <img src="/admin/images/no.gif"
+                                     onclick="app.changeStatus(this,'goods','is_hot','<%= goodsList[i]._id %>')"/>
+                            <% } %>
+                        </td>
+                        <td class="text-center">
+                            <span onclick="app.editNum(this,'goods','sort','<%= goodsList[i]._id %>')"><%= goodsList[i].sort %></span>
+                        </td>
+                        <!--                        <td class="text-center"><span onclick="app.editNum(this,'goods','goods_number','<%= goodsList[i]._id %>')"><%= goodsList[i].goods_number %></span></td>-->
+                        <td class="text-center">
+                            <a href="/<%= config.adminPath %>/goods/edit?id=<%= goodsList[i]._id %>">Modify</a>
+                            <a class="delete" href="/<%= config.adminPath %>/goods/delete?id=<%= goodsList[i]._id %>">Delete</a>
+                        </td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+            <div class="pagination" id="pagination">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  $('#pagination').jqPaginator({
+    totalPages: <%= totalPages %>,
+    visiblePages: 10,
+    currentPage: <%= page %>,
+    onPageChange: function(num, type) {
+      // console.log(num,type);
+      if (type == 'change') {
+        location.href = "/<%= config.adminPath %>/goods?page=" + num + "&keyword=<%= keyword %>";
+      }
+    }
+  });
+</script>
+</body>
+</html>

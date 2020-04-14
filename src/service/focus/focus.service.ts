@@ -4,41 +4,42 @@ import { FocusInterface } from '../../interface/focus.interface';
 
 @Injectable()
 export class FocusService {
-  constructor(@InjectModel('Focus') private readonly focusModel) { }
 
-  async find(json: FocusInterface = {}, fields?: string) {
+  constructor(@InjectModel('Focus') private readonly focusModel) {
+  }
+
+  async find(json: FocusInterface = {}, sort = {}, fields?: string) {
     try {
-      return await this.focusModel.find(json, fields);
+      return await this.focusModel.find(json, fields).sort(sort);
     } catch (error) {
-      console.log(error);
-      return null;
+      return [];
     }
   }
 
   async add(json: FocusInterface) {
     try {
-      let focus = new this.focusModel(json);
-      return await focus.save();
+      var access = new this.focusModel(json);
+      var result = await access.save();
+      return result;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }
 
   async update(json1: FocusInterface, json2: FocusInterface) {
     try {
-      return await this.focusModel.updateOne(json1, json2);
+      var result = await this.focusModel.updateOne(json1, json2);
+      return result;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }
 
   async delete(json: FocusInterface) {
     try {
-      return await this.focusModel.deleteOne(json);
+      var result = await this.focusModel.deleteOne(json);
+      return result;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }
@@ -46,4 +47,5 @@ export class FocusService {
   getModel() {
     return this.focusModel;
   }
+
 }

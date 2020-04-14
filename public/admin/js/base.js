@@ -1,30 +1,36 @@
-$(function () {
+$(function() {
+
   app.init();
+
 });
 
-let app = {
-  init: function () {
-    this.toggleAside();
+var app = {
+  init: function() {
+    this.slideToggle();
     this.resizeIframe();
+
     this.confirmDelete();
+
   },
-  resizeIframe: function () {
-    $('#rightMain').height($(window).height() - 50);
+  resizeIframe: function() {
+    $('#rightMain').height($(window).height() - 80);
   },
-  toggleAside: function () {
+  slideToggle: function() {
     $('.aside>li:nth-child(1) ul,.aside>li:nth-child(2) ul').hide();
-    $('.aside h4').click(function () {
-      // $(this).toggleClass('active');
+    $('.aside h4').click(function() {
       $(this).siblings('ul').slideToggle();
     });
   },
+  // 提示是否删除
   confirmDelete() {
-    $('.delete').click(function () {
-      return confirm('Are you sure?');
+    $('.delete').click(function() {
+      var flag = confirm('Are you sure?');
+      return flag;
     });
   },
   changeStatus(el, model, fields, id) {
-    $.get('/admin/main/changeStatus', { id, model, fields }, function (data) {
+
+    $.get('/admin/main/changeStatus', { id: id, model: model, fields: fields }, function(data) {
       if (data.success) {
         if (el.src.indexOf('yes') != -1) {
           el.src = '/admin/images/no.gif';
@@ -35,28 +41,24 @@ let app = {
     });
   },
   editNum(el, model, fields, id) {
-    // 获取el里面的值
-    let val = $(el).html();
-    // 创建一个input的dom节点
-    let input = $('<input value="">');
-    // 点击input的时候阻止冒泡 为了点击时不执行任何操作
-    $(input).click(function () {
+    var val = $(el).html();
+    var input = $('<input value=\'\' />');
+    $(el).html(input);
+    $(input).trigger('focus').val(val);
+    $(input).click(function() {
       return false;
     });
-    // 把input放在el里面
-    $(el).html(input);
-    // 让input获取焦点 给input赋值
-    $(input).trigger('focus').val(val);
-    // 鼠标离开的时候给span赋值 并触发ajax请求
-    $(input).blur(function () {
+
+    $(input).blur(function() {
       var num = $(this).val();
       $(el).html(num);
-      // 触发ajax请求
-      $.get('/admin/main/editNum', { id, model, fields, num });
+      $.get('/admin/main/editNum', { id: id, model: model, fields: fields, num: num }, function(data) {
+        console.log(data);
+      });
     });
-  }
-}
+  },
+};
 
-window.onresize = function () {
+window.onresize = function() {
   app.resizeIframe();
-}
+};

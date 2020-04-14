@@ -1,0 +1,178 @@
+<%- include ../public/page_header.ejs %>
+<!-- start banner_x -->
+<%- include ../public/banner.ejs %>
+
+<link rel="stylesheet" href="/default/css/product.css">
+
+<style>
+    .swiper-slide img {
+        max-width: 560px;
+    }
+</style>
+<!-- end banner_x -->
+
+<!-- xiangqing -->
+<div class="jieshao mt20 w">
+    <div class="left fl">
+        <div class="swiper-container">
+            <div class="swiper-wrapper" id="swiper-wrapper">
+
+                <% for(var i = 0;i < goodsImage.length;i++){ %>
+
+                <div class="swiper-slide">
+                    <img src="<%= goodsImage[i].img_url %>">
+                </div>
+                <% } %>
+
+            </div>
+
+            <div class="swiper-pagination"></div>
+
+            <!-- Add Arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+
+        </div>
+
+
+    </div>
+    <div class="right fr">
+        <div class="h3 ml20 mt20"><%= goodsInfo.title %></div>
+        <div class="jianjie mr40 ml20 mt10"><%= goodsInfo.sub_title %></div>
+        <div class="jiage ml20 mt10"><%= goodsInfo.shop_price %>Yuan</div>
+
+        <% if(relationGoods.length > 0){ %>
+        <div class="ft20 ml20 mt20">Select Version</div>
+        <div class="xzbb ml20 mt10">
+
+            <% for(var i = 0;i < relationGoods.length;i++){ %>
+            <div class="banben fl <% if(goodsInfo._id.toString() == relationGoods[i]._id.toString()){ %>active <% } %>">
+                <a href="/product/<%= relationGoods[i]._id %>">
+                    <span><%= relationGoods[i].goods_version %></span>
+                    <span><%= relationGoods[i].shop_price %>Yuan</span>
+                </a>
+            </div>
+            <% } %>
+
+            <div class="clear"></div>
+        </div>
+        <% } %>
+
+        <% if(goodsColor.length > 0){ %>
+
+        <div class="ft20 ml20 mt20 clear">Select Color</div>
+        <div class="xzbb ml20 mt10 clearfix" id="color_list">
+
+            <% for(var i = 0;i < goodsColor.length;i++){ %>
+
+            <div class="banben fl <% if(i == 0){ %>active<% } %>" goods_id="<%= goodsInfo._id %>"
+                 color_id="<%= goodsColor[i]._id %>">
+                <a>
+                    <span class="yuandian" style="background:<%= goodsColor[i].color_value %>"></span>
+                    <span class="yanse"><%= goodsColor[i].color_name %></span>
+                </a>
+
+            </div>
+
+            <% } %>
+
+        </div>
+
+        <% } %>
+
+        <div class="xqxq mt10 ml20">
+            <div class="top1 mt10">
+                <div class="left1 fl">Version: <%= goodsInfo.goods_version %></div>
+                <div class="right1 fr">Price: <%= goodsInfo.shop_price %> Yuan</div>
+                <div class="clear"></div>
+            </div>
+            <div class="bot mt20 ft20 ftbc">Sum：<%= goodsInfo.shop_price %> Yuan</div>
+        </div>
+        <div class="xiadan ml20 mt10">
+            <input class="jrgwc" type="button" name="jrgwc" id="addCart" value="Add to Cart"/>
+
+
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+
+<div class="container clearfix">
+
+
+    <div class="c_left">
+        <div>Left for Ads</div>
+    </div>
+
+
+    <div class="c_right">
+        <ul class="detail_list clearfix">
+
+            <li class="">Description</li>
+
+            <li class="">Specification</li>
+        </ul>
+
+
+        <div class="detail_info">
+
+            <div class="detail_info_item">
+                <%- goodsInfo.goods_content %>
+            </div>
+            <div class="detail_info_item">
+                <ul>
+
+                    <% for(var i = 0;i < goodsAttr.length;i++){ %>
+                    <% if(goodsAttr[i].attribute_value){ %>
+                    <li class="row clearfix">
+                        <div class="span5">
+                            <h2><%= goodsAttr[i].attribute_title %></h2>
+                        </div>
+                        <div class="span15">
+                            <%- helper.formatAttr(goodsAttr[i].attribute_value) %>
+                        </div>
+                    </li>
+                    <% } %>
+
+                    <% } %>
+                </ul>
+            </div>
+
+
+<!--            <div class="detail_info_item">-->
+<!--                <ul class="comment_list">-->
+<!--                   -->
+<!--                </ul>-->
+<!--            </div>-->
+
+
+        </div>
+
+    </div>
+
+    <script>
+      $(function() {
+
+
+        $('#addCart').click(function() {
+
+
+          var goods_id = $('#color_list .active').attr('goods_id');
+
+          var color_id = $('#color_list .active').attr('color_id');
+
+          location.href = "/cart/addCart?goods_id=" + goods_id + '&color_id=' + color_id;
+
+
+        })
+      })
+    </script>
+
+</div>
+
+<!-- footer -->
+<%- include ../public/page_footer.ejs %>
+
+</body>
+</html>

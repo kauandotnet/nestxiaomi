@@ -1,15 +1,16 @@
 <nav class="navbar navbar-inverse" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <img src="/admin/images/node.jpg" height="44px;" />
+    <div class="container-fluid">
+        <div class="navbar-header">
+        </div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">           
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Welcome, <%=userinfo.username%></a>
+                </li>
+                <li><a href="/<%=config.adminPath%>/login/loginOut">Logout</a>
+                </li>
+                <li><a  href="/<%=config.adminPath%>/main/clearCache">clear Redis cache (if you updated anything in the background!)</a>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="collapse navbar-collapse" id="example-navbar-collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a>Welcome, <%= userinfo.username %>!</a>
-        </li>
-        <li><a href="/<%= config.adminPath %>/login/logout">Logout safely</a>
-        </li>
-      </ul>
-    </div>
-  </div>
 </nav>

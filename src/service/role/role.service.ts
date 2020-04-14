@@ -4,41 +4,42 @@ import { RoleInterface } from '../../interface/role.interface';
 
 @Injectable()
 export class RoleService {
-  constructor(@InjectModel('Role') private readonly roleModel) { }
+
+  constructor(@InjectModel('Role') private roleModel) {
+  }
 
   async find(json: RoleInterface = {}, fields?: string) {
     try {
       return await this.roleModel.find(json, fields);
     } catch (error) {
-      console.log(error);
-      return null;
+      return [];
     }
   }
 
   async add(json: RoleInterface) {
     try {
-      let role = new this.roleModel(json);
-      return await role.save();
+      var role = new this.roleModel(json);
+      var result = await role.save();
+      return result;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }
 
   async update(json1: RoleInterface, json2: RoleInterface) {
     try {
-      return await this.roleModel.updateOne(json1, json2);
+      var result = await this.roleModel.updateOne(json1, json2);
+      return result;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }
 
   async delete(json: RoleInterface) {
     try {
-      return await this.roleModel.deleteOne(json);
+      var result = await this.roleModel.deleteOne(json);
+      return result;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }
