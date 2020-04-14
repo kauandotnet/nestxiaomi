@@ -29,7 +29,7 @@
 http://167.179.83.18/
 
 ## BackEnd Demo Page
-http://167.179.83.18/admin
+http://167.179.83.18/admin/login
 
 ## Description
 
